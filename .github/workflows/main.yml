@@ -28,8 +28,6 @@ jobs:
         run: |
           cd boost_test
           dir
-          cd boost_test
-          dir
       - name: Bootstrap Boost Build
         shell: cmd
         run: |
