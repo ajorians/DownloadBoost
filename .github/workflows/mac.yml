@@ -21,9 +21,9 @@ jobs:
           git config user.name "A.J. Orians"
           git config user.email ajorians@gmail.com
       - name: Create release branch
-        run: git checkout -b $env:OutputBranchName
+        run: git checkout -b $OutputBranchName
       - name: Download
-        run: wget "$env:BoostDownloadURL"
+        run: wget "$BoostDownloadURL"
       - name: Extract Download file
         run: |
           tar --bzip2 -xf boost_1_81_0.tar.bz2
@@ -62,4 +62,4 @@ jobs:
           git add lib
           git commit --message "Added Libs :)"
       - name: Push new branch
-        run: git push origin $env:OutputBranchName
+        run: git push origin $OutputBranchName
