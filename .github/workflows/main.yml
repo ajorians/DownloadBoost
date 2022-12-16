@@ -1,0 +1,9 @@
+name: 'Boost Prebuilt MSVC'
+
+jobs:
+  Prebuild-Boost:
+    runs-on: windows-latest
+    steps:
+      - name: Download
+        shell: powershell
+        run: Invoke-WebRequest -Uri "https://www.ticalc.org/pub/nspire/asm/games/nstacker.zip" -OutFile "boost.zip"
