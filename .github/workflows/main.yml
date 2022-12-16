@@ -1,7 +1,11 @@
-name: 'Boost Prebuilt MSVC'
+name: 'Boost Prebuild With MSVC'
 
-on: workflow_dispatch
+#on: workflow_dispatch
 
+on:
+  push:
+    branches:
+      - master
 env:
   BoostDownloadURL: http://test.orians.org/boost.zip
   ZipName: boost
@@ -12,7 +16,7 @@ jobs:
     steps:
       - name: Download
         shell: powershell
-        run: Invoke-WebRequest -Uri $env:BoostDownloadURL -OutFile $env:ZipName.zip
+        run: Invoke-WebRequest -Uri "$env:BoostDownloadURL" -OutFile "$env:ZipName.zip"
       - name: Extract Zip file
         shell: cmd
         run: |
