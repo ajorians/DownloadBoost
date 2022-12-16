@@ -2,10 +2,19 @@ name: 'Boost Prebuilt MSVC'
 
 on: workflow_dispatch
 
+env:
+  BoostDownloadURL: https://test.orians.org/boost.zip
+  ZipName: boost
+
 jobs:
   Prebuild-Boost:
     runs-on: windows-latest
     steps:
       - name: Download
         shell: powershell
-        run: Invoke-WebRequest -Uri "https://www.ticalc.org/pub/nspire/asm/games/nstacker.zip" -OutFile "boost.zip"
+        run: Invoke-WebRequest -Uri "${{BoostDownloadURL}}" -OutFile "${{ZipName}}.zip"
+      - name: Extract Zip file
+        shell: cmd
+        run: |
+          7z x -y ${{ZipName}}.zip
+          del ${{ZIPname}}.zip
