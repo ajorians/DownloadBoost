@@ -1,15 +1,16 @@
 name: 'Boost Prebuild With MSVC'
 
-#on: workflow_dispatch
+on: workflow_dispatch
 
-on:
-  push:
-    branches:
-      - master
+# If want to build each time you commit :)
+#on:
+#  push:
+#    branches:
+#      - master
+
 env:
   OutputBranchName: release3
-  BoostDownloadURL: http://test.orians.org/boost_1_81_0.zip
-#http://test.orians.org/boost_test.zip
+  BoostDownloadURL: https://boostorg.jfrog.io/artifactory/main/release/1.81.0/source/boost_1_81_0.zip
 
 jobs:
   Prebuild-Boost:
