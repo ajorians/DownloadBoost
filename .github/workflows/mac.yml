@@ -31,7 +31,6 @@ jobs:
           rm boost_1_81_0.tar.bz2
       - name: Bootstrap Boost
         run: |
-          ls
           cd boost_1_81_0
           ls
           ./bootstrap.sh --prefix=.
@@ -39,27 +38,28 @@ jobs:
         run: |
           cd boost_1_81_0
           ls
-          .\b2 --with-atomic --with-chrono --with-date_time --with-filesystem --with-program_options --with-regex --with-serialization --with-system --with-thread
+          ./b2 install --with-atomic --with-chrono --with-date_time --with-filesystem --with-program_options --with-regex --with-serialization --with-system --with-thread
       - name: Prepare Includes
         run: |
           ls
           mkdir include
-          mv boost_1_81_0\boost include
+          mv boost_1_81_0/boost include
           git add include
           git commit --message "Added Includes :)"
       - name: Prepare Libs
         run: |
-          dir
+          ls
+          ls boost_1_81_0/stage/lib
           mkdir lib
           move boost_1_81_0/stage/lib/libboost_atomic* lib
-          move boost_1_81_0\stage\lib\libboost_chrono* lib
-          move boost_1_81_0\stage\lib\libboost_date_time* lib
-          move boost_1_81_0\stage\lib\libboost_filesystem* lib
-          move boost_1_81_0\stage\lib\libboost_program_options* lib
-          move boost_1_81_0\stage\lib\libboost_regex* lib
-          move boost_1_81_0\stage\lib\libboost_serialization* lib
-          move boost_1_81_0\stage\lib\libboost_system* lib
-          move boost_1_81_0\stage\lib\libboost_thread* lib
+          move boost_1_81_0/stage/lib/libboost_chrono* lib
+          move boost_1_81_0/stage/lib/libboost_date_time* lib
+          move boost_1_81_0/stage/lib/libboost_filesystem* lib
+          move boost_1_81_0/stage/lib/libboost_program_options* lib
+          move boost_1_81_0/stage/lib/libboost_regex* lib
+          move boost_1_81_0/stage/lib/libboost_serialization* lib
+          move boost_1_81_0/stage/lib/libboost_system* lib
+          move boost_1_81_0/stage/lib/libboost_thread* lib
           git add lib
           git commit --message "Added Libs :)"
       - name: Push new branch
