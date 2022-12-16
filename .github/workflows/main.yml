@@ -7,6 +7,7 @@ on:
     branches:
       - master
 env:
+  OutputBranchName: release2
   BoostDownloadURL: http://test.orians.org/boost_1_81_0.zip
 #http://test.orians.org/boost_test.zip
 
@@ -23,7 +24,7 @@ jobs:
           git config user.name "A.J. Orians"
           git config user.email ajorians@gmail.com
       - name: Create release branch
-        run: git checkout -b release
+        run: git checkout -b $OutputBranchName
       - name: Download
         shell: powershell
         run: Invoke-WebRequest -Uri "$env:BoostDownloadURL" -OutFile "$env:ZipName.zip"
@@ -52,4 +53,4 @@ jobs:
           git add include
           git commit --message "Added Includes"
       - name: Push new branch
-        run: git push origin release
+        run: git push origin $OutputBranchName
