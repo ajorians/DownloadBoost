@@ -48,18 +48,17 @@ jobs:
           git commit --message "Added Includes :)"
       - name: Prepare Libs
         run: |
-          ls boost_1_81_0
           ls boost_1_81_0/lib
           mkdir lib
-          move boost_1_81_0/lib/libboost_atomic* lib
-          move boost_1_81_0/lib/libboost_chrono* lib
-          move boost_1_81_0/lib/libboost_date_time* lib
-          move boost_1_81_0/lib/libboost_filesystem* lib
-          move boost_1_81_0/lib/libboost_program_options* lib
-          move boost_1_81_0/lib/libboost_regex* lib
-          move boost_1_81_0/lib/libboost_serialization* lib
-          move boost_1_81_0/lib/libboost_system* lib
-          move boost_1_81_0/lib/libboost_thread* lib
+          mv boost_1_81_0/lib/libboost_atomic*.a lib
+          mv boost_1_81_0/lib/libboost_chrono*.a lib
+          mv boost_1_81_0/lib/libboost_date_time*.a lib
+          mv boost_1_81_0/lib/libboost_filesystem*.a lib
+          mv boost_1_81_0/lib/libboost_program_options*.a lib
+          mv boost_1_81_0/lib/libboost_regex*.a lib
+          mv boost_1_81_0/lib/libboost_serialization*.a lib
+          mv boost_1_81_0/lib/libboost_system*.a lib
+          mv boost_1_81_0/lib/libboost_thread*.a lib
           git add lib
           git commit --message "Added Libs :)"
       - name: Push new branch
