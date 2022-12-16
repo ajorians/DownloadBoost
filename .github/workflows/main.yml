@@ -12,9 +12,9 @@ jobs:
     steps:
       - name: Download
         shell: powershell
-        run: Invoke-WebRequest -Uri $BoostDownloadURL -OutFile $ZipName.zip
+        run: Invoke-WebRequest -Uri $env:BoostDownloadURL -OutFile $env:ZipName.zip
       - name: Extract Zip file
         shell: cmd
         run: |
-          7z x -y $ZipName.zip
-          del $ZIPname.zip
+          7z x -y %ZipName%.zip
+          del %ZIPname%.zip
