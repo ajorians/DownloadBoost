@@ -1,0 +1,65 @@
+name: 'Boost Prebuild With Mac'
+
+#on: workflow_dispatch
+
+on:
+  push:
+    branches:
+      - master
+env:
+  OutputBranchName: macrelease3
+  BoostDownloadURL: https://boostorg.jfrog.io/artifactory/main/release/1.81.0/source/boost_1_81_0.tar.bz2
+
+jobs:
+  Prebuild-Boost:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Initialize mandatory git config
+        run: |
+          git config user.name "A.J. Orians"
+          git config user.email ajorians@gmail.com
+      - name: Create release branch
+        run: git checkout -b $env:OutputBranchName
+      - name: Download
+        run: wget "$env:BoostDownloadURL"
+      - name: Extract Download file
+        run: |
+          tar --bzip2 -xf boost_1_81_0.tar.bz2
+          rm boost_1_81_0.tar.bz2
+      - name: Bootstrap Boost
+        run: |
+          ls
+          cd boost_1_81_0
+          ls
+          ./bootstrap.sh --prefix=.
+      - name: Build Boost
+        run: |
+          cd boost_1_81_0
+          ls
+          .\b2 --with-atomic --with-chrono --with-date_time --with-filesystem --with-program_options --with-regex --with-serialization --with-system --with-thread
+      - name: Prepare Includes
+        run: |
+          ls
+          mkdir include
+          mv boost_1_81_0\boost include
+          git add include
+          git commit --message "Added Includes :)"
+      - name: Prepare Libs
+        run: |
+          dir
+          mkdir lib
+          move boost_1_81_0/stage/lib/libboost_atomic* lib
+          move boost_1_81_0\stage\lib\libboost_chrono* lib
+          move boost_1_81_0\stage\lib\libboost_date_time* lib
+          move boost_1_81_0\stage\lib\libboost_filesystem* lib
+          move boost_1_81_0\stage\lib\libboost_program_options* lib
+          move boost_1_81_0\stage\lib\libboost_regex* lib
+          move boost_1_81_0\stage\lib\libboost_serialization* lib
+          move boost_1_81_0\stage\lib\libboost_system* lib
+          move boost_1_81_0\stage\lib\libboost_thread* lib
+          git add lib
+          git commit --message "Added Libs :)"
+      - name: Push new branch
+        run: git push origin $env:OutputBranchName
