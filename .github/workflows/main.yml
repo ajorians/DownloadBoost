@@ -24,7 +24,7 @@ jobs:
           git config user.name "A.J. Orians"
           git config user.email ajorians@gmail.com
       - name: Create release branch
-        run: git checkout -b $OutputBranchName
+        run: git checkout -b $env:OutputBranchName
       - name: Download
         shell: powershell
         run: Invoke-WebRequest -Uri "$env:BoostDownloadURL" -OutFile "$env:ZipName.zip"
@@ -51,6 +51,33 @@ jobs:
           mkdir include
           move boost_1_81_0\boost include
           git add include
-          git commit --message "Added Includes"
+          git commit --message "Added Includes :)"
+      - name: Prepare Libs
+        run: |
+          dir
+          mkdir lib
+          mkdir lib\x64
+          mkdir lib\x64\Release
+          move boost_1_81_0\stage\lib\libboost_atomic-vc*-mt-x64-* lib\x64\Release
+          move boost_1_81_0\stage\lib\libboost_chrono-vc*-mt-x64-* lib\x64\Release
+          move boost_1_81_0\stage\lib\libboost_date_time-vc*-mt-x64-* lib\x64\Release
+          move boost_1_81_0\stage\lib\libboost_filesystem-vc*-mt-x64-* lib\x64\Release
+          move boost_1_81_0\stage\lib\libboost_program_options-vc*-mt-x64-* lib\x64\Release
+          move boost_1_81_0\stage\lib\libboost_regex-vc*-mt-x64-* lib\x64\Release
+          move boost_1_81_0\stage\lib\libboost_serialization-vc*-mt-x64-* lib\x64\Release
+          move boost_1_81_0\stage\lib\libboost_system-vc*-mt-x64-* lib\x64\Release
+          move boost_1_81_0\stage\lib\libboost_thread-vc*-mt-x64-* lib\x64\Release
+          mkdir lib\x64\Debug
+          move boost_1_81_0\stage\lib\libboost_atomic-vc*-mt-gd-x64-* lib\x64\Debug
+          move boost_1_81_0\stage\lib\libboost_chrono-vc*-mt-gd-x64-* lib\x64\Debug
+          move boost_1_81_0\stage\lib\libboost_date_time-vc*-mt-gd-x64-* lib\x64\Debug
+          move boost_1_81_0\stage\lib\libboost_filesystem-vc*-mt-gd-x64-* lib\x64\Debug
+          move boost_1_81_0\stage\lib\libboost_program_options-vc*-mt-gd-x64-* lib\x64\Debug
+          move boost_1_81_0\stage\lib\libboost_regex-vc*-mt-gd-x64-* lib\x64\Debug
+          move boost_1_81_0\stage\lib\libboost_serialization-vc*-mt-gd-x64-* lib\x64\Debug
+          move boost_1_81_0\stage\lib\libboost_system-vc*-mt-gd-x64-* lib\x64\Debug
+          move boost_1_81_0\stage\lib\libboost_thread-vc*-mt-gd-x64-* lib\x64\Debug
+          git add lib
+          git commit --message "Added Libs :)"
       - name: Push new branch
-        run: git push origin $OutputBranchName
+        run: git push origin $env:OutputBranchName
