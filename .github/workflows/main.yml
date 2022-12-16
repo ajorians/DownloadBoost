@@ -16,6 +16,14 @@ jobs:
     env:
       ZipName: boost
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Initialize mandatory git config
+        run: |
+          git config user.name "A.J. Orians"
+          git config user.email ajorians@gmail.com
+      - name: Create release branch
+        run: git checkout -b release
       - name: Download
         shell: powershell
         run: Invoke-WebRequest -Uri "$env:BoostDownloadURL" -OutFile "$env:ZipName.zip"
@@ -24,10 +32,24 @@ jobs:
         run: |
           7z x -y %ZipName%.zip
           del %ZIPname%.zip
-      - name: Build Boost
+      - name: Bootstrap Boost
         shell: cmd
         run: |
           cd boost_1_81_0
           dir
           bootstrap
+      - name: Build Boost
+        shell: cmd
+        run: |
+          cd boost_1_81_0
+          dir
           .\b2
+      - name: Prepare Includes
+        run: |
+          dir
+          mkdir include
+          move boost include
+          git add include
+          git commit --message "Added Includes"
+      - name: Push new branch
+        run: git push origin release
