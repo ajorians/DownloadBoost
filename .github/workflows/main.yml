@@ -7,12 +7,13 @@ on:
     branches:
       - master
 env:
-  BoostDownloadURL: http://test.orians.org/boost.zip
-  ZipName: boost
+  BoostDownloadURL: http://test.orians.org/boost_test.zip
 
 jobs:
   Prebuild-Boost:
     runs-on: windows-latest
+    env:
+      ZipName: boost
     steps:
       - name: Download
         shell: powershell
@@ -22,3 +23,8 @@ jobs:
         run: |
           7z x -y %ZipName%.zip
           del %ZIPname%.zip
+      - name: Bootstrap Boost Build
+        shell: cmd
+        run: |
+          cd boost_test
+          bootstrap
