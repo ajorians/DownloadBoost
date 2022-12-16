@@ -7,7 +7,7 @@ on:
     branches:
       - master
 env:
-  OutputBranchName: release2
+  OutputBranchName: release3
   BoostDownloadURL: http://test.orians.org/boost_1_81_0.zip
 #http://test.orians.org/boost_test.zip
 
@@ -44,7 +44,7 @@ jobs:
         run: |
           cd boost_1_81_0
           dir
-          .\b2
+          .\b2 --with-atomic --with-chrono --with-date_time --with-filesystem --with-program_options --with-regex --with-serialization --with-system --with-thread
       - name: Prepare Includes
         run: |
           dir
