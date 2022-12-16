@@ -1,5 +1,7 @@
 name: 'Boost Prebuilt MSVC'
 
+on: workflow_dispatch
+
 jobs:
   Prebuild-Boost:
     runs-on: windows-latest
