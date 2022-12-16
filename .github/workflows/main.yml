@@ -23,8 +23,14 @@ jobs:
         run: |
           7z x -y %ZipName%.zip
           del %ZIPname%.zip
+      - name: CD into extracted directory
+        shell: cmd
+        run: |
+          cd boost_test
+          dir
+          cd boost_test
+          dir
       - name: Bootstrap Boost Build
         shell: cmd
         run: |
-          cd boost_test/boost_test
           bootstrap
