@@ -3,7 +3,7 @@ name: 'Boost Prebuild With MSVC'
 on: workflow_dispatch
 
 env:
-  OutputBranchName: release/1.80.0
+  OutputBranchName: release142/1.80.0
   BoostDownloadURL: https://boostorg.jfrog.io/artifactory/main/release/1.80.0/source/boost_1_80_0.zip
 
 jobs:
@@ -39,7 +39,7 @@ jobs:
         run: |
           cd boost_1_80_0
           dir
-          .\b2 --with-atomic --with-chrono --with-date_time --with-filesystem --with-program_options --with-regex --with-serialization --with-system --with-thread
+          .\b2 toolset=msvc-14.2 --with-atomic --with-chrono --with-date_time --with-filesystem --with-program_options --with-regex --with-serialization --with-system --with-thread
       - name: Prepare Includes
         run: |
           dir
