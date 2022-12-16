@@ -26,5 +26,5 @@ jobs:
       - name: Bootstrap Boost Build
         shell: cmd
         run: |
-          cd boost_test
+          cd boost_test/boost_test
           bootstrap
