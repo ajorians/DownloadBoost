@@ -3,7 +3,7 @@ name: 'Boost Prebuilt MSVC'
 on: workflow_dispatch
 
 env:
-  BoostDownloadURL: https://test.orians.org/boost.zip
+  BoostDownloadURL: http://test.orians.org/boost.zip
   ZipName: boost
 
 jobs:
