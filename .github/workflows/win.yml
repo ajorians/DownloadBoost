@@ -2,15 +2,9 @@ name: 'Boost Prebuild With MSVC'
 
 on: workflow_dispatch
 
-# If want to build each time you commit :)
-#on:
-#  push:
-#    branches:
-#      - master
-
 env:
-  OutputBranchName: release3
-  BoostDownloadURL: https://boostorg.jfrog.io/artifactory/main/release/1.81.0/source/boost_1_81_0.zip
+  OutputBranchName: release/1.80.0
+  BoostDownloadURL: https://boostorg.jfrog.io/artifactory/main/release/1.80.0/source/boost_1_80_0.zip
 
 jobs:
   Prebuild-Boost:
@@ -37,20 +31,20 @@ jobs:
       - name: Bootstrap Boost
         shell: cmd
         run: |
-          cd boost_1_81_0
+          cd boost_1_80_0
           dir
           bootstrap
       - name: Build Boost
         shell: cmd
         run: |
-          cd boost_1_81_0
+          cd boost_1_80_0
           dir
           .\b2 --with-atomic --with-chrono --with-date_time --with-filesystem --with-program_options --with-regex --with-serialization --with-system --with-thread
       - name: Prepare Includes
         run: |
           dir
           mkdir include
-          move boost_1_81_0\boost include
+          move boost_1_80_0\boost include
           git add include
           git commit --message "Added Includes :)"
       - name: Prepare Libs
@@ -59,25 +53,25 @@ jobs:
           mkdir lib
           mkdir lib\x64
           mkdir lib\x64\Release
-          move boost_1_81_0\stage\lib\libboost_atomic-vc*-mt-x64-* lib\x64\Release
-          move boost_1_81_0\stage\lib\libboost_chrono-vc*-mt-x64-* lib\x64\Release
-          move boost_1_81_0\stage\lib\libboost_date_time-vc*-mt-x64-* lib\x64\Release
-          move boost_1_81_0\stage\lib\libboost_filesystem-vc*-mt-x64-* lib\x64\Release
-          move boost_1_81_0\stage\lib\libboost_program_options-vc*-mt-x64-* lib\x64\Release
-          move boost_1_81_0\stage\lib\libboost_regex-vc*-mt-x64-* lib\x64\Release
-          move boost_1_81_0\stage\lib\libboost_serialization-vc*-mt-x64-* lib\x64\Release
-          move boost_1_81_0\stage\lib\libboost_system-vc*-mt-x64-* lib\x64\Release
-          move boost_1_81_0\stage\lib\libboost_thread-vc*-mt-x64-* lib\x64\Release
+          move boost_1_80_0\stage\lib\libboost_atomic-vc*-mt-x64-* lib\x64\Release
+          move boost_1_80_0\stage\lib\libboost_chrono-vc*-mt-x64-* lib\x64\Release
+          move boost_1_80_0\stage\lib\libboost_date_time-vc*-mt-x64-* lib\x64\Release
+          move boost_1_80_0\stage\lib\libboost_filesystem-vc*-mt-x64-* lib\x64\Release
+          move boost_1_80_0\stage\lib\libboost_program_options-vc*-mt-x64-* lib\x64\Release
+          move boost_1_80_0\stage\lib\libboost_regex-vc*-mt-x64-* lib\x64\Release
+          move boost_1_80_0\stage\lib\libboost_serialization-vc*-mt-x64-* lib\x64\Release
+          move boost_1_80_0\stage\lib\libboost_system-vc*-mt-x64-* lib\x64\Release
+          move boost_1_80_0\stage\lib\libboost_thread-vc*-mt-x64-* lib\x64\Release
           mkdir lib\x64\Debug
-          move boost_1_81_0\stage\lib\libboost_atomic-vc*-mt-gd-x64-* lib\x64\Debug
-          move boost_1_81_0\stage\lib\libboost_chrono-vc*-mt-gd-x64-* lib\x64\Debug
-          move boost_1_81_0\stage\lib\libboost_date_time-vc*-mt-gd-x64-* lib\x64\Debug
-          move boost_1_81_0\stage\lib\libboost_filesystem-vc*-mt-gd-x64-* lib\x64\Debug
-          move boost_1_81_0\stage\lib\libboost_program_options-vc*-mt-gd-x64-* lib\x64\Debug
-          move boost_1_81_0\stage\lib\libboost_regex-vc*-mt-gd-x64-* lib\x64\Debug
-          move boost_1_81_0\stage\lib\libboost_serialization-vc*-mt-gd-x64-* lib\x64\Debug
-          move boost_1_81_0\stage\lib\libboost_system-vc*-mt-gd-x64-* lib\x64\Debug
-          move boost_1_81_0\stage\lib\libboost_thread-vc*-mt-gd-x64-* lib\x64\Debug
+          move boost_1_80_0\stage\lib\libboost_atomic-vc*-mt-gd-x64-* lib\x64\Debug
+          move boost_1_80_0\stage\lib\libboost_chrono-vc*-mt-gd-x64-* lib\x64\Debug
+          move boost_1_80_0\stage\lib\libboost_date_time-vc*-mt-gd-x64-* lib\x64\Debug
+          move boost_1_80_0\stage\lib\libboost_filesystem-vc*-mt-gd-x64-* lib\x64\Debug
+          move boost_1_80_0\stage\lib\libboost_program_options-vc*-mt-gd-x64-* lib\x64\Debug
+          move boost_1_80_0\stage\lib\libboost_regex-vc*-mt-gd-x64-* lib\x64\Debug
+          move boost_1_80_0\stage\lib\libboost_serialization-vc*-mt-gd-x64-* lib\x64\Debug
+          move boost_1_80_0\stage\lib\libboost_system-vc*-mt-gd-x64-* lib\x64\Debug
+          move boost_1_80_0\stage\lib\libboost_thread-vc*-mt-gd-x64-* lib\x64\Debug
           git add lib
           git commit --message "Added Libs :)"
       - name: Push new branch
