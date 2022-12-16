@@ -24,9 +24,10 @@ jobs:
         run: |
           7z x -y %ZipName%.zip
           del %ZIPname%.zip
-      - name: Bootstrap Boost Build
+      - name: Build Boost
         shell: cmd
         run: |
           cd boost_1_81_0
           dir
           bootstrap
+          .\b2
