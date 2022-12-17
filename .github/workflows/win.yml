@@ -33,13 +33,13 @@ jobs:
       - name: Bootstrap Boost
         shell: cmd
         run: |
-          cd $env:BoostVersionExtractedFolder
+          cd %BoostVersionExtractedFolder%
           dir
           bootstrap
       - name: Build Boost
         shell: cmd
         run: |
-          cd $env:BoostVersionExtractedFolder
+          cd %BoostVersionExtractedFolder%
           dir
           .\b2 toolset=msvc-14.2 address-model=64 --with-atomic --with-chrono --with-date_time --with-filesystem --with-program_options --with-regex --with-serialization --with-system --with-thread
       - name: Prepare Includes
