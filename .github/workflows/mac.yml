@@ -2,13 +2,8 @@ name: 'Boost Prebuild With Mac'
 
 on: workflow_dispatch
 
-#on:
-#  push:
-#    branches:
-#      - master
-
 env:
-  OutputBranchName: macrelease3
+  OutputBranchName: mactestlido
   BoostDownloadURL: https://boostorg.jfrog.io/artifactory/main/release/1.81.0/source/boost_1_81_0.tar.bz2
 
 jobs:
@@ -34,11 +29,16 @@ jobs:
           cd boost_1_81_0
           ls
           ./bootstrap.sh --prefix=.
-      - name: Build Boost
-        run: |
           cd boost_1_81_0
           ls
-          ./b2 install --with-atomic --with-chrono --with-date_time --with-filesystem --with-program_options --with-regex --with-serialization --with-system --with-thread
+      - name: Build MacOS Silicon Boost
+        run: |
+          ./b2 install architecture=arm address-model=64 target-os=darwin --clean --prefix=macosarm --with-atomic --with-chrono --with-date_time --with-filesystem --with-program_options --with-regex --with-serialization --with-system --with-thread
+          ls
+      - name: Build MacOS Boost
+        run: |
+          ./b2 install architecture=x86 address-model=64 target-os=darwin --clean --prefix=macos --with-atomic --with-chrono --with-date_time --with-filesystem --with-program_options --with-regex --with-serialization --with-system --with-thread
+          ls
       - name: Prepare Includes
         run: |
           ls
