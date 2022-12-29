@@ -51,7 +51,7 @@ jobs:
           lipo -arch x86_64 boost_1_81_0/macos/lib/libboost_program_options.a -arch arm64 boost_1_81_0/macosarm/lib/libboost_program_options.a -create -output lib/libboost_program_options.a
           lipo -arch x86_64 boost_1_81_0/macos/lib/libboost_regex.a -arch arm64 boost_1_81_0/macosarm/lib/libboost_regex.a -create -output lib/libboost_regex.a
           lipo -arch x86_64 boost_1_81_0/macos/lib/libboost_serialization.a -arch arm64 boost_1_81_0/macosarm/lib/libboost_serialization.a -create -output lib/libboost_serialization.a
-          lipo -arch x86_64 boost_1_81_0/macos/lib/llibboost_system.a -arch arm64 boost_1_81_0/macosarm/lib/libboost_system.a -create -output lib/libboost_system.a
+          lipo -arch x86_64 boost_1_81_0/macos/lib/libboost_system.a -arch arm64 boost_1_81_0/macosarm/lib/libboost_system.a -create -output lib/libboost_system.a
           lipo -arch x86_64 boost_1_81_0/macos/lib/libboost_thread.a -arch arm64 boost_1_81_0/macosarm/lib/libboost_thread.a -create -output lib/libboost_thread.a
       - name: Prepare Includes
         run: |
