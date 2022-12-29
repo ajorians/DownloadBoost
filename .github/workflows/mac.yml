@@ -29,14 +29,16 @@ jobs:
           cd boost_1_81_0
           ls
           ./bootstrap.sh --prefix=.
-          cd boost_1_81_0
-          ls
       - name: Build MacOS Silicon Boost
         run: |
+          cd boost_1_81_0
+          ls
           ./b2 install architecture=arm address-model=64 target-os=darwin --clean --prefix=macosarm --with-atomic --with-chrono --with-date_time --with-filesystem --with-program_options --with-regex --with-serialization --with-system --with-thread
           ls
       - name: Build MacOS Boost
         run: |
+          cd boost_1_81_0
+          ls
           ./b2 install architecture=x86 address-model=64 target-os=darwin --clean --prefix=macos --with-atomic --with-chrono --with-date_time --with-filesystem --with-program_options --with-regex --with-serialization --with-system --with-thread
           ls
       - name: Prepare Includes
