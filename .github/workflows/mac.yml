@@ -33,14 +33,26 @@ jobs:
         run: |
           cd boost_1_81_0
           ls
-          ./b2 install architecture=arm address-model=64 target-os=darwin --clean --prefix=macosarm --with-atomic --with-chrono --with-date_time --with-filesystem --with-program_options --with-regex --with-serialization --with-system --with-thread
+          ./b2 install architecture=arm address-model=64 target-os=darwin --prefix=macosarm --with-atomic --with-chrono --with-date_time --with-filesystem --with-program_options --with-regex --with-serialization --with-system --with-thread
           ls
       - name: Build MacOS Boost
         run: |
           cd boost_1_81_0
           ls
-          ./b2 install architecture=x86 address-model=64 target-os=darwin --clean --prefix=macos --with-atomic --with-chrono --with-date_time --with-filesystem --with-program_options --with-regex --with-serialization --with-system --with-thread
+          ./b2 install architecture=x86 address-model=64 target-os=darwin --prefix=macos --with-atomic --with-chrono --with-date_time --with-filesystem --with-program_options --with-regex --with-serialization --with-system --with-thread
           ls
+      - name: Combine architecture
+        run: |
+          mkdir lib
+          lipo -arch x86_64 boost_1_81_0/macos/lib/libboost_atomic.a -arch arm64 boost_1_81_0/macosarm/lib/libboost_atomic.a -create -output lib/libboost_atomic.a
+          lipo -arch x86_64 boost_1_81_0/macos/lib/libboost_chrono.a -arch arm64 boost_1_81_0/macosarm/lib/libboost_chrono.a -create -output lib/libboost_chrono.a
+          lipo -arch x86_64 boost_1_81_0/macos/lib/libboost_date_time.a -arch arm64 boost_1_81_0/macosarm/lib/libboost_date_time.a -create -output lib/libboost_date_time.a
+          lipo -arch x86_64 boost_1_81_0/macos/lib/libboost_filesystem.a -arch arm64 boost_1_81_0/macosarm/lib/libboost_filesystem.a -create -output lib/libboost_filesystem.a
+          lipo -arch x86_64 boost_1_81_0/macos/lib/libboost_program_options.a -arch arm64 boost_1_81_0/macosarm/lib/libboost_program_options.a -create -output lib/libboost_program_options.a
+          lipo -arch x86_64 boost_1_81_0/macos/lib/libboost_regex.a -arch arm64 boost_1_81_0/macosarm/lib/libboost_regex.a -create -output lib/libboost_regex.a
+          lipo -arch x86_64 boost_1_81_0/macos/lib/libboost_serialization.a -arch arm64 boost_1_81_0/macosarm/lib/libboost_serialization.a -create -output lib/libboost_serialization.a
+          lipo -arch x86_64 boost_1_81_0/macos/lib/llibboost_system.a -arch arm64 boost_1_81_0/macosarm/lib/libboost_system.a -create -output lib/libboost_system.a
+          lipo -arch x86_64 boost_1_81_0/macos/lib/libboost_thread.a -arch arm64 boost_1_81_0/macosarm/lib/libboost_thread.a -create -output lib/libboost_thread.a
       - name: Prepare Includes
         run: |
           ls
@@ -50,17 +62,6 @@ jobs:
           git commit --message "Added Includes :)"
       - name: Prepare Libs
         run: |
-          ls boost_1_81_0/lib
-          mkdir lib
-          mv boost_1_81_0/lib/libboost_atomic*.a lib
-          mv boost_1_81_0/lib/libboost_chrono*.a lib
-          mv boost_1_81_0/lib/libboost_date_time*.a lib
-          mv boost_1_81_0/lib/libboost_filesystem*.a lib
-          mv boost_1_81_0/lib/libboost_program_options*.a lib
-          mv boost_1_81_0/lib/libboost_regex*.a lib
-          mv boost_1_81_0/lib/libboost_serialization*.a lib
-          mv boost_1_81_0/lib/libboost_system*.a lib
-          mv boost_1_81_0/lib/libboost_thread*.a lib
           git add lib
           git commit --message "Added Libs :)"
       - name: Push new branch
